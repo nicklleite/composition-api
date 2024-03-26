@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, toRefs, computed } from "vue";
+import { ref, reactive, toRefs, computed, onMounted, onUpdated, onUnmounted } from "vue";
 
 const props = defineProps({
     cartItem: {
@@ -27,17 +27,29 @@ const total = computed(() => {
 const { name, price, quantity } = toRefs(item);
 
 const remove = () => {
-    // alert("Remove item"); // Implement remove item logic here
     emit("remove", item);
 };
+
+onMounted(() => {
+    console.log("Mounted");
+});
+
+onUpdated(() => {
+    console.log("Updated");
+});
+
+onUnmounted(() => {
+    console.log("Unmounted");
+});
+
 </script>
 
 <template>
     <div>
         <h1>Item: {{ name }} - Price: {{ price }} - Quantity: {{ quantity }}</h1>
 
-        <button @click="decrement">Decrement</button>
-        <button @click="increment">Increment</button>
+        <button @click="decrement">-</button>
+        <button @click="increment">+</button>
         <br>
         <button @click="remove">Remove</button>
 
